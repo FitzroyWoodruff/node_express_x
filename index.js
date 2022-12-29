@@ -18,6 +18,38 @@ app.post("/api/lessons", (req, res) => {
 		});
 });
 
+app.post("/api/lessons/:id/messages", (req, res) => {
+	const { id } = req.params;
+	const msg = req.body;
+
+	if (!msg.lesson_id) {
+		msg["lesson_id"] = parseInt(id, 10);
+	}
+
+	Lessons.findById(id)
+		.then((lesson) => {
+			if (!lesson) {
+				res.status(404).json({ message: "Invalid ID" });
+			}
+
+			//verify fields are present
+			if (!msg.sender | !msg.text) {
+				res.status(400).json({ message: "Messages missing sender and text" });
+			}
+
+			Lessons.addMessage(msg, id)
+				.then((message) => {
+					res.status(200).json({ message });
+				})
+				.catch((error) => {
+					res.status(500).json({ message: "cannot add lesson" });
+				});
+		})
+		.catch((error) => {
+			res.status(500).json({ message: "cannot findlesson" });
+		});
+});
+
 //--------------------GET--------------------------------------------
 app.get("/", (req, res) => {
 	res.json({ message: "Why, Hello there!" });
