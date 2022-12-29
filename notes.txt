@@ -1,0 +1,15 @@
+a RESTful Express ap should provide for all the CRUD operations
+
+            REST            |       non REST
+                            |
+GET         /api/users      |       /getUsers
+                            |
+POST        /api/users      |       /addUsers
+                            |
+UPDATE      /api/users/:id  |       /updateUsers
+                            |
+DELETE      /api/users/:id  |       /deleteUsers
+
+REST allows for more efficient Server Side Routing
+
+
