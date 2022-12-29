@@ -12,6 +12,7 @@ module.exports = {
 	update,
 	addMessage,
 	findLessonMessages,
+	removeMessage,
 };
 
 async function add(lesson) {
@@ -49,8 +50,8 @@ async function addMessage(message, lesson_id) {
 	return findMessageById(id);
 }
 
-async function findLessonMessages() {
-	return await db("lessons as l")
+function findLessonMessages(lesson_id) {
+	return db("lessons as l")
 		.join("messages as m", "l.id", "m.lesson_id")
 		.select(
 			"l.id as LessonID",
@@ -60,4 +61,8 @@ async function findLessonMessages() {
 			"m.text"
 		)
 		.where({ lesson_id });
+}
+
+function removeMessage(id) {
+	return db("messages").where({ id }).del();
 }
