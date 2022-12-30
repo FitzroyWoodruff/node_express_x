@@ -16,5 +16,7 @@ module.exports = {
 			},
 		},
 	},
-	production: {},
+	production: {
+		client: "pg",
+	},
 };
